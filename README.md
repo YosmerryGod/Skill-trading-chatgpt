@@ -127,4 +127,4 @@ This repository documents research methods and analytical workflows. It does not
 
 ## Contributing
 
-Improvements should include clear definitions, reproducible calculations, data provenance, and counterexample handling. Do not submit unsupported claims or cherry-picked results. See the workflow documentation before proposing changes.
+Improvements should include clear definitions, reproducible calculations, data provenance, and counterexample handling. Do not submit unsupported claims or cherry-picked results. See [CONTRIBUTING.md](CONTRIBUTING.md) and the [research workflow](docs/WORKFLOW.md) before proposing changes.
