@@ -28,6 +28,10 @@ Every sample must have a unique sample ID and record:
 - Candle timeframe(s).
 - Lead-in period and follow-through period.
 - Event classification, if already known.
+- User target direction: pre-bullish / pre-bearish / exploratory-both.
+- Actual observed pre-event trend: bullish / bearish / sideways / mixed / unclear.
+- Actual event outcome: upside expansion / downside expansion / failed move / range / unclear.
+- Volatility regime before event and during event, with calculation metadata.
 - Data retrieval date.
 - Dataset version and any processing notes.
 
@@ -76,6 +80,23 @@ Do not silently convert units. Keep raw values alongside any derived values.
 ## 4. Derived features
 
 Derived values must be reproducible and must retain their formula and lookback period.
+
+### Volatility context (required classification)
+
+For every sample, calculate and record a price-derived volatility measure. Suitable choices include rolling standard deviation of log returns (realized volatility) or ATR/range percentage. The chosen measure must be consistent within a comparison cohort.
+
+Record:
+- Measure name and exact formula.
+- Candle timeframe and lookback length.
+- Pre-event volatility value and event-period volatility value.
+- Baseline period/distribution used to classify low / medium / high volatility.
+- Classification thresholds or quantile boundaries and the reason for choosing them.
+- Any annualization factor, if used.
+- Data sufficiency and quality flags.
+
+Prefer relative, symbol-specific historical distributions (for example quantile-based regimes) rather than universal fixed percentage cutoffs. Do not compare raw volatility values across tokens unless the measure and normalization make them comparable. If history is insufficient, label the regime unclassified.
+
+Volatility is a contextual feature derived from price. It does not change the approved core inputs (Price, Volume, OI), does not indicate bullish/bearish direction by itself, and must not be treated as a predictive signal without separate validation.
 
 Examples:
 - Price return: (close / prior close - 1) × 100%.
@@ -144,6 +165,14 @@ Use this logical structure for each sample:
 
 ### Event notes
 - event_type:
+- target_direction:
+- observed_pre_event_trend:
+- actual_event_outcome:
+- pre_event_volatility:
+- event_volatility:
+- volatility_measure_formula:
+- volatility_lookback_and_baseline:
+- volatility_regime:
 - phase_boundaries:
 - analyst_notes:
 
