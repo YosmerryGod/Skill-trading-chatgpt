@@ -134,3 +134,26 @@ Update the shared pattern table without rewriting earlier observations.
 - Do not turn a historical research request into an entry recommendation unless the user asks for a trading plan.
 - When the user asks to compare cases, explicitly distinguish common patterns from differences.
 - Preserve uncertainty. The purpose is to learn from the data, not to confirm a preconceived theory.
+
+
+## 9. Current cross-market finding (provisional)
+
+Record this finding from the first three analyzed samples: INITUSDT, PIEVERSEUSDT, and EDGEUSDT.
+
+**Most consistent observation so far:** Open Interest (OI) increased alongside price and volume expansion.
+
+**Funding and long/short account dominance did not show the same consistent pattern** across the three samples:
+- INITUSDT had negative funding and short-account dominance.
+- PIEVERSEUSDT had positive funding and long-account dominance.
+- EDGEUSDT had positive funding and long-account dominance.
+
+### How to use this finding
+
+- Treat the OI + price + volume relationship as the leading recurring observation to test in future samples.
+- Do not treat it as a proven predictive signal or a cause of price expansion.
+- Do not require funding to be negative or positive as a universal condition.
+- Do not require long accounts or short accounts to dominate as a universal condition.
+- Keep recording counterexamples. Update this finding only when additional independent market samples support or contradict it.
+- In each new market analysis, explicitly check whether OI rose during the same interval as price and volume expansion, and quantify the changes against the pre-expansion baseline.
+
+This is a provisional observation based on only three markets, not a statistically validated trading rule.
