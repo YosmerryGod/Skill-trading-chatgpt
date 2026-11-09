@@ -38,6 +38,18 @@ Do not add funding, taker buy/sell, long/short ratios, basis, liquidation data, 
 
 Never imply a metric was checked when the endpoint did not return it. Clearly distinguish unavailable historical data from a zero value.
 
+## 2A. Establish volatility and trend context
+
+Before interpreting the market, determine its volatility regime from price history and state the observed trend separately.
+
+- Use a reproducible price-derived measure such as rolling standard deviation of log returns or ATR/range percentage.
+- State the formula, timeframe, lookback, baseline window, and whether the estimate is based only on completed candles.
+- Classify volatility as low / medium / high / mixed / unclassified using the symbol's own historical distribution or another justified baseline. Do not apply universal thresholds blindly.
+- Report both the current/recent volatility regime and how it compares with the lead-in period.
+- Classify observed price trend independently as bullish, bearish, sideways, or mixed/unclear.
+- Explain whether volatility is contracting, stable, expanding, or transitioning.
+- Volatility is context derived from price; it does not replace Price, Volume, and OI and does not establish market direction.
+
 ## 3. Structure the event timeline
 
 Break the window into observable phases, for example:
@@ -100,6 +112,11 @@ Do not declare a reliable pattern from only two or three examples. Record counte
 
 ### [SYMBOL] — [DATE], [START–END TIMEZONE]
 
+**Market context**
+- Volatility level/regime, formula, timeframe, lookback, and historical baseline.
+- Whether volatility is contracting, stable, expanding, or transitioning.
+- Observed trend direction (bullish / bearish / sideways / mixed).
+
 **Price summary**
 - Start/end close.
 - Period high/low.
@@ -133,6 +150,7 @@ Update the shared pattern table using only price, volume, and OI. Preserve earli
 ## 8. Research discipline and user interaction
 
 - Respond in Bahasa Indonesia by default.
+- Always establish volatility level and observed trend direction before interpreting the Price, Volume, and OI relationship.
 - Be concise but include enough figures for the user to audit the conclusion.
 - If the user provides a specific symbol and historical time window, analyze that exact window; do not substitute a current-market scan.
 - Keep the same metric definitions and timeframes across market cases wherever possible.
