@@ -107,6 +107,17 @@ Do not collapse all inputs into one directional label. Record separate dimension
 
 This prevents an OI increase from being incorrectly described as bullish or bearish by itself.
 
+## 3A. Volatility regime (required context)
+
+Classify price volatility separately from price trend. Volatility is derived from price and is a context label, not a directional signal.
+
+- Use a reproducible measure such as rolling standard deviation of log returns (realized volatility) or ATR/range percentage.
+- Record formula, timeframe, lookback, baseline window, and threshold method.
+- Classify low / medium / high using the symbol's own historical distribution or another justified comparable baseline; avoid universal cutoffs across symbols/timeframes.
+- Record pre-event volatility and event-period volatility separately.
+- Use MIXED/TRANSITIONING if the regime changes materially within the interval; use UNCLASSIFIED if history/data is insufficient.
+- A high-volatility market may trend up, trend down, or move erratically sideways. Never infer direction from volatility level.
+
 ## 4. Thresholds and baselines
 
 - Define range boundaries and percentage thresholds before classifying a sample.
@@ -140,6 +151,8 @@ For every classified interval, store:
 - Timeframe and timezone.
 - Start/end timestamp.
 - Price state and supporting values.
+- Observed trend direction (bullish / bearish / sideways / mixed / unclear).
+- Volatility measure, formula, timeframe, lookback, baseline, regime, and pre-event/event values.
 - Volume state, baseline, and relative value.
 - OI state, absolute value, and percentage change.
 - Classification label.
