@@ -15,6 +15,15 @@ A modular collection of research workflows for analyzing historical crypto marke
 
 The central idea is simple: **study the data, test the pattern, keep the counterexamples, and only then update the analysis method.**
 
+## Start here — AI interaction rules
+
+Before handling a new request, the AI must read **[respon-ai.md](respon-ai.md)**. It defines the first question, routes the user into the correct mode, and sets the rules for saving and counting research samples.
+
+The two modes are separate:
+
+- **Analisa Market** — ask for the market symbol and analyze it. This does not automatically create a research sample.
+- **Belajar & Menambah Sampel** — ask for symbol, start candle, end candle, timeframe, and timezone when needed. Compare the result with existing samples and save the completed research record to GitHub.
+
 ## Research scope
 
 The core market-analysis dataset is intentionally focused on three observable inputs:
@@ -31,6 +40,7 @@ Additional indicators are not automatically accepted. Candidate indicators must 
 
 | Document | Purpose |
 |---|---|
+| [AI Response Workflow](respon-ai.md) | Mandatory entry point for user intent, mode selection, data requests, and sample-counting rules |
 | [Market Analysis](skills/skill-analisa.md) | Analyze a specific market and time window using approved inputs |
 | [Market Learning](skills/skill-learning.md) | Discover similarities and recurring sequences across markets |
 | [Pattern Validation](skills/skill-validation.md) | Test hypotheses against independent samples and counterexamples |
@@ -51,18 +61,22 @@ Additional indicators are not automatically accepted. Candidate indicators must 
 
 ```mermaid
 flowchart TD
-    A[Historical market data] --> B[Dataset standard]
-    B --> C[Market analysis]
-    C --> D[Cross-market learning]
-    D --> E[Candidate pattern library]
-    E --> F[Pattern validation]
-    F --> G[Historical backtesting]
-    G --> H[Performance review]
-    H --> I{Evidence strong enough?}
-    I -->|No| D
-    I -->|Yes| J[Propose analysis-method update]
-    J --> K[User-approved update to market analysis]
-    K --> C
+    A[User request] --> B[Read respon-ai.md]
+    B --> C{Choose mode}
+    C -->|Analisa Market| D[Ask for symbol]
+    D --> E[Market analysis]
+    C -->|Belajar & Menambah Sampel| F[Ask symbol and candle window]
+    F --> G[Dataset collection]
+    G --> H[Cross-market learning]
+    H --> I[Classify and save sample]
+    I --> J[Candidate pattern library]
+    J --> K[Pattern validation]
+    K --> L[Historical backtesting]
+    L --> M[Performance review]
+    M --> N{Evidence strong enough?}
+    N -->|No| H
+    N -->|Yes| O[Propose analysis-method update]
+    O --> P[User-approved update]
 ```
 
 The workflow is iterative. A new market can support an existing pattern, contradict it, or reveal a new candidate. No pattern or indicator is promoted automatically.
@@ -77,21 +91,21 @@ The workflow is iterative. A new market can support an existing pattern, contrad
 6. **No unsupported participant claims.** Price, volume, and OI do not identify who traded or why.
 7. **No automatic indicator creep.** New indicators require a clear definition and evidence of added value.
 8. **Research is not a guarantee.** A validated historical pattern is not proof of future performance or profitability.
+9. **Pattern-specific counting.** A market sample only counts toward a pattern target when it matches that pattern's written definition. Different patterns must never be combined to reach 10 samples.
 
-## Current research hypothesis
+## Current research status
 
-The initial three reviewed samples — INITUSDT, PIEVERSEUSDT, and EDGEUSDT — showed a provisional relationship where OI increased alongside price and volume expansion.
+Research samples are stored independently, even when they show different behaviors. Each sample is classified as supporting a candidate pattern, contradicting it, showing a different candidate, or insufficiently clear.
 
-This is a starting hypothesis, not a validated signal. New samples must test it, including cases where:
-- Price and volume expand without OI increasing.
-- OI and volume increase while price remains range-bound.
-- OI increases only after most of the price move has occurred.
+The target of 10 applies to **comparable samples for one specific pattern**, not to the total number of markets studied. Ten samples are an initial research threshold, not statistical proof or automatic validation. See [respon-ai.md](respon-ai.md) for the full counting rules.
 
 ## Repository structure
 
 ```text
 .
 ├── README.md
+├── respon-ai.md
+├── CONTRIBUTING.md
 ├── docs/
 │   └── WORKFLOW.md
 ├── skills/
@@ -107,19 +121,24 @@ This is a starting hypothesis, not a validated signal. New samples must test it,
 ├── templates/
 │   └── sample-record.md
 └── research/
-    └── README.md
+    ├── samples/
+    ├── patterns/
+    ├── validation/
+    ├── backtests/
+    └── reviews/
 ```
 
 ## Getting started
 
-1. Read the [research workflow](docs/WORKFLOW.md).
-2. Use the dataset standard to capture a historical market sample.
-3. Analyze the exact symbol, contract, timeframe, and date window.
-4. Compare the sample with existing patterns.
-5. Record both supporting evidence and counterexamples.
-6. Validate a fixed hypothesis on independent data.
-7. Backtest only after the rule and evaluation criteria are defined.
-8. Propose changes to the analysis method only when evidence supports them.
+1. Read [respon-ai.md](respon-ai.md) to identify the user's intent and select the correct mode.
+2. For market analysis, request the symbol and follow the analysis skill.
+3. For learning, request the symbol, exact candle start/end, timeframe, and timezone.
+4. Use the dataset standard to capture the historical market sample.
+5. Compare the sample with existing patterns and retain counterexamples.
+6. Save every completed learning sample to its own research record.
+7. Count samples only within their matching pattern group.
+8. Validate a fixed hypothesis on independent data.
+9. Propose changes to the analysis method only when evidence supports them.
 
 ## Scope and disclaimer
 
