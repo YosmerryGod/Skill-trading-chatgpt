@@ -25,8 +25,10 @@ When the user selects **Analisa Market**:
    - `skills/skill-dataset.md` when collecting or interpreting historical data
    - `skills/skill-market-classification.md` when classifying observable market state, if relevant
 5. Analyze the requested market. The approved core inputs are Price, Volume, and Open Interest (OI).
-6. Clearly separate observed facts, interpretations, and unknowns.
-7. Do **not** automatically add the result to the research sample count or commit a research sample to GitHub. This mode is analysis only unless the user separately asks to save it.
+6. First establish the market's volatility regime from historical price candles before interpreting its behavior. Report the measured volatility level (low / medium / high / mixed or unclassified), calculation, lookback, timeframe, and comparison baseline. Use a consistent, reproducible price-derived measure such as realized volatility or ATR/range percentage; treat volatility as market context, not a new directional signal.
+7. Describe the current price trend separately (bullish, bearish, sideways, mixed/unclear) and distinguish trend from volatility. A highly volatile market is not necessarily bullish or bearish.
+8. Clearly separate observed facts, interpretations, and unknowns.
+9. Do **not** automatically add the result to the research sample count or commit a research sample to GitHub. This mode is analysis only unless the user separately asks to save it.
 
 Example prompt:
 > Kirim symbol market yang ingin dianalisis, contoh: `HANAUSDT`.
@@ -40,6 +42,7 @@ When the user selects **Belajar & Menambah Sampel**:
    - Start candle timestamp/date and time
    - End candle timestamp/date and time
    - Candle timeframe, for example: `5m`, `15m`, or `1h`
+   - Target direction/behavior to study: **pre-bullish expansion**, **pre-bearish expansion**, or **both / exploratory**
 2. Ask for missing inputs before retrieving data. Accept natural-language dates/times, but confirm the timezone if it is not clear. Never silently assume a timezone.
 3. Read and follow:
    - `skills/skill-learning.md`
@@ -47,15 +50,16 @@ When the user selects **Belajar & Menambah Sampel**:
    - `skills/skill-pattern-library.md`
    - `skills/skill-validation.md` when validation is relevant
    - `skills/skill-market-classification.md` when classifying the sample
-4. Retrieve the requested historical data and inspect the exact candle window. Record source, contract, timeframe, timezone, units, coverage, and limitations.
-5. Compare the new market with existing research samples and candidate patterns.
-6. Classify the sample based on evidence:
+4. Retrieve the requested historical data and inspect the exact candle window. Include a suitable lead-in period before the event and follow-through after it; record source, contract, timeframe, timezone, units, coverage, and limitations.
+5. Measure and record volatility level before the target move and during the event. State the formula, lookback, timeframe, baseline, and classification method. Also record the observed trend direction separately from the user's target direction.
+6. Compare the new market with existing research samples and candidate patterns.
+7. Classify the sample based on evidence:
    - Supports an existing candidate pattern
    - Contradicts or is a counterexample to an existing candidate pattern
    - Shows a different/new candidate pattern
    - Insufficient evidence / unclear classification
-7. Save every completed learning sample to the appropriate GitHub research folder, following the repository dataset standard. Do not wait until a pattern reaches 10 samples.
-8. Report the GitHub file link and commit result after the write succeeds. Never claim it was saved if GitHub did not confirm success.
+8. Save every completed learning sample to the appropriate GitHub research folder, following the repository dataset standard. Do not wait until a pattern reaches 10 samples.
+9. Report the GitHub file link and commit result after the write succeeds. Never claim it was saved if GitHub did not confirm success.
 
 Example request format:
 ```text
@@ -63,6 +67,7 @@ Symbol: HANAUSDT
 Start candle: 09-11-2026 08:00
 End candle: 09-11-2026 16:00
 Timeframe: 5m
+Target direction: Pre-bullish expansion
 Timezone: WITA (UTC+8)
 ```
 
@@ -75,6 +80,9 @@ Timezone: WITA (UTC+8)
 - Do not combine different patterns to reach the target of 10.
 - Supporting samples, counterexamples, and unclear samples must be labeled separately.
 - A market may contain more than one distinct event or phase. Do not assume the entire observation window represents one pattern.
+- Compare samples within relevant volatility regimes (low / medium / high) and target directions (pre-bullish / pre-bearish). Do not assume a pattern transfers across regimes or directions.
+- Volatility classification must include its calculation, lookback, timeframe, baseline, and threshold method. Prefer relative, symbol-specific baselines or distribution-based thresholds over universal fixed cutoffs.
+- Keep the user's target direction separate from the direction that actually occurred. Record failed or opposite-direction outcomes as counterexamples, not as if they matched the target.
 - Ten samples are an initial research threshold, not statistical proof or automatic validation.
 - After collecting comparable samples, evaluate the pattern using the validation and backtesting skills, including failed/non-rally control cases where appropriate.
 
@@ -89,6 +97,8 @@ Never report a combined total as progress toward a pattern-specific target.
 - Read the relevant skill documents before starting work.
 - Use Binance market data as the source when the research workflow requires Binance data.
 - The core analysis inputs are Price, Volume, and OI. Do not silently add indicators to the core method.
+- Volatility is a required context/classification dimension derived from price (for example realized volatility or ATR/range percentage); it is not automatically a new directional indicator or a replacement for the approved core inputs.
+- Always state volatility regime and observed trend direction separately. Never equate high volatility with bullishness or bearishness.
 - OI increasing does not by itself prove that new longs are opening; every futures contract has both a long and a short side.
 - Volume increasing alone is not bullish.
 - Do not claim liquidation, absorption, manipulation, whale activity, market-maker accumulation, or participant intent without direct evidence.
