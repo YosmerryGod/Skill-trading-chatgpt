@@ -32,6 +32,8 @@ The core market-analysis dataset is intentionally focused on three observable in
 - **Volume** — trading activity compared with the same asset's historical baseline.
 - **Open Interest (OI)** — outstanding contracts and changes over time.
 
+Volatility is also measured as a **price-derived context/classification** (with formula, lookback, and historical baseline recorded). It is used to group and compare samples, not treated automatically as a new directional signal. Learning samples are stratified by target direction (pre-bullish / pre-bearish / exploratory) and volatility regime.
+
 Additional indicators are not automatically accepted. Candidate indicators must demonstrate that they add useful information through the learning and validation workflow.
 
 ## Documentation
