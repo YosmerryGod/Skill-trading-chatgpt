@@ -30,12 +30,29 @@ For every sample, record:
 - Date and exact time window, including timezone.
 - Timeframe used (for example 5m, 15m, or 1h).
 - Event classification: strong rise, strong fall, failed breakout, consolidation, or other clearly defined behavior.
+- User's target direction: pre-bullish expansion, pre-bearish expansion, or exploratory/both.
+- Actual observed direction/outcome, recorded separately from the target.
+- Volatility regime before the event and during the event (low / medium / high / mixed / unclassified), with formula, lookback, timeframe, baseline, and thresholds.
 - Price OHLC and percentage changes.
 - Volume per candle and comparison with the same symbol's recent baseline.
 - Open Interest (OI), absolute change, and percentage change.
 - Lead-in period before the event and follow-through period after it.
 
 Use consistent definitions and comparable timeframes across samples. Normalize volume and other scale-dependent values against each token's own history rather than comparing raw values between tokens.
+
+### Volatility and direction stratification
+
+Volatility can change the behavior and apparent timing of price, volume, and OI. It must therefore be measured and recorded for every learning sample, not guessed from visual impression.
+
+- Measure volatility from price candles using a clearly specified derived measure, such as realized volatility (standard deviation of log returns over a fixed rolling window) or ATR/range percentage.
+- Record the exact formula, lookback length, candle timeframe, annualization choice if applicable, and baseline window.
+- Classify the regime as low / medium / high using symbol- and timeframe-appropriate historical distributions or another explicitly justified method. Do not impose universal numeric cutoffs across tokens.
+- Record both pre-event volatility and volatility during the event. The pre-event value is the relevant context for studying what preceded the move; event volatility describes what happened during it.
+- Record the target direction being studied: pre-bullish expansion, pre-bearish expansion, or exploratory/both. Keep this separate from the actual outcome.
+- Record the actual observed trend before the event (bullish / bearish / sideways / mixed) and the actual event outcome (upside expansion / downside expansion / failed move / range / unclear).
+- Compare candidate patterns within similar volatility regimes and target directions first. Then test whether they generalize across regimes/directions; never assume they do.
+- Volatility is a contextual classification derived from price, not proof of direction and not automatically an additional core trading signal.
+- If the historical baseline is insufficient, mark volatility regime as unclassified rather than inventing a level.
 
 ## 3. Break each event into phases
 
@@ -56,6 +73,9 @@ Do not force an event into all six phases if the data does not show them.
 
 For each new sample, compare it with previous samples using questions such as:
 
+- What was the pre-event volatility regime, and did it change before the move?
+- Did the same sequence behave differently in low-, medium-, and high-volatility conditions?
+- Did the sequence precede bullish and bearish expansions equally, or only one direction?
 - Did volume contract or expand before the move?
 - Did OI contract, remain stable, or expand before the move?
 - Did price, volume, and OI change together or at different times?
@@ -145,9 +165,9 @@ Do not silently modify `skill-analisa.md`. Present the evidence-based recommenda
 
 Maintain a compact table that is updated after every new sample:
 
-| Pattern / feature | Samples supporting | Counterexamples | Current confidence | Decision |
-|---|---:|---:|---|---|
-| Price + volume + OI expansion | Record count | Record count | Preliminary / moderate / strong | Keep testing |
+| Pattern / feature | Target direction | Volatility regime | Samples supporting | Counterexamples | Current confidence | Decision |
+|---|---|---|---:|---:|---|---|
+| Price + volume + OI expansion | Bullish / bearish / both | Low / medium / high / mixed | Record count | Record count | Preliminary / moderate / strong | Keep testing |
 | Candidate feature A | Record count | Record count | Preliminary / moderate / strong | Add / test / reject |
 
 Confidence labels are qualitative, not statistical guarantees:
@@ -178,7 +198,10 @@ For future learning:
 After analyzing a new sample, report:
 
 ### Sample added
-Symbol, contract, date, timezone, timeframe, and event type.
+Symbol, contract, date, timezone, timeframe, user target direction, actual event direction/outcome, and event type.
+
+### Volatility context
+Pre-event and event volatility values, classification (low / medium / high / mixed / unclassified), calculation formula, lookback, baseline, and timeframe. Include the observed pre-event trend separately.
 
 ### Observed sequence
 Chronological price, volume, and OI behavior, with key values.
@@ -210,6 +233,9 @@ A concise summary of what has been learned so far, sample count, and remaining u
 - Respond in Bahasa Indonesia by default.
 - When the user says "belajar dari data", use this cross-market comparison workflow.
 - When the user gives a new symbol and time window, analyze that exact sample and compare it with prior cases.
+- Before starting a learning sample, collect the target direction: pre-bullish, pre-bearish, or exploratory/both. Do not silently infer it.
+- Always measure and record volatility context and observed trend direction separately.
+- If the user has not specified a target direction, ask before data collection; do not start pattern counting until the target is clear.
 - When the user says "apa pola yang sama?", focus on repeated sequences and quantify them where possible.
 - When the user asks "indicator apa yang harus dipakai?", rank indicators by evidence and usefulness, not popularity.
 - Keep the historical learning process separate from live trade planning.
