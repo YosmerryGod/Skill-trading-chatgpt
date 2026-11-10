@@ -59,7 +59,7 @@ Additional indicators are not automatically accepted. Candidate indicators must 
 - [Research workflow](docs/WORKFLOW.md)
 - [Sample dataset template](templates/sample-record.md)
 - [Research records](research/README.md)
-- [Backtest history template](history-backtest/symbol.md) — use this format to create a persistent backtest history file for each symbol, e.g. `history-backtest/BRUSDT.md`.
+- [Backtest history template](history-backtest/symbol.md) — each symbol has its own file, e.g. `history-backtest/BTCUSDT.md` or `history-backtest/BRUSDT.md`.
 
 ## How the system works
 
@@ -124,7 +124,8 @@ The target of 10 applies to **comparable samples for one specific pattern**, not
 │   └── skill-validation.md
 ├── backtest-skill.md
 ├── history-backtest/
-│   └── symbol.md
+│   ├── README.md
+│   └── BTCUSDT.md
 ├── templates/
 │   └── sample-record.md
 └── research/
@@ -145,7 +146,7 @@ The target of 10 applies to **comparable samples for one specific pattern**, not
 6. Save every completed learning sample to its own research record.
 7. Count samples only within their matching pattern group.
 8. Validate a fixed hypothesis on independent data.
-9. For a completed backtest, follow [backtest-skill.md](backtest-skill.md) and save the full report in a symbol-specific file under `history-backtest/` (for example, `history-backtest/BRUSDT.md`), using [history-backtest/symbol.md](history-backtest/symbol.md) as the report template. Preserve prior runs and never write unverified results.
+9. For a completed backtest, follow [backtest-skill.md](backtest-skill.md) and save the full report in a symbol-specific file under `history-backtest/` (for example, `history-backtest/BRUSDT.md`), using an existing symbol report as the report template. Preserve prior runs and never write unverified results.
 10. Propose changes to the analysis method only when evidence supports them.
 
 ## Scope and disclaimer
