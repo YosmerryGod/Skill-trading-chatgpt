@@ -47,6 +47,7 @@ Additional indicators are not automatically accepted. Candidate indicators must 
 | [Market Learning](skills/skill-learning.md) | Discover similarities and recurring sequences across markets |
 | [Pattern Validation](skills/skill-validation.md) | Test hypotheses against independent samples and counterexamples |
 | [Historical Backtesting](skills/skill-backtesting.md) | Simulate fixed rules chronologically on historical data |
+| [Parabolic SAR Backtest Skill](backtest-skill.md) | Backtest Parabolic SAR Follow Trend with 1H trend, 5M entry, 1M exit sequencing, cooldown, TP/SL, and volatility comparisons |
 | [Pattern Library](skills/skill-pattern-library.md) | Preserve pattern definitions, evidence, versions, and status |
 | [Dataset Standard](skills/skill-dataset.md) | Standardize raw observations, timestamps, units, and provenance |
 | [Market Classification](skills/skill-market-classification.md) | Label observable market states without inferring participant intent |
@@ -58,6 +59,7 @@ Additional indicators are not automatically accepted. Candidate indicators must 
 - [Research workflow](docs/WORKFLOW.md)
 - [Sample dataset template](templates/sample-record.md)
 - [Research records](research/README.md)
+- [Backtest history template](history-backtest/symbol.md) — use this format to create a persistent backtest history file for each symbol, e.g. `history-backtest/BRUSDT.md`.
 
 ## How the system works
 
@@ -120,6 +122,9 @@ The target of 10 applies to **comparable samples for one specific pattern**, not
 │   ├── skill-performance-review.md
 │   ├── skill-planing.md
 │   └── skill-validation.md
+├── backtest-skill.md
+├── history-backtest/
+│   └── symbol.md
 ├── templates/
 │   └── sample-record.md
 └── research/
@@ -140,7 +145,8 @@ The target of 10 applies to **comparable samples for one specific pattern**, not
 6. Save every completed learning sample to its own research record.
 7. Count samples only within their matching pattern group.
 8. Validate a fixed hypothesis on independent data.
-9. Propose changes to the analysis method only when evidence supports them.
+9. For a completed backtest, follow [backtest-skill.md](backtest-skill.md) and save the full report in a symbol-specific file under `history-backtest/` (for example, `history-backtest/BRUSDT.md`), using [history-backtest/symbol.md](history-backtest/symbol.md) as the report template. Preserve prior runs and never write unverified results.
+10. Propose changes to the analysis method only when evidence supports them.
 
 ## Scope and disclaimer
 
